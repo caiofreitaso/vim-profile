@@ -21,10 +21,11 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 nnoremap M <C-w>_<C-w>\|
-nnoremap m <C-w>=nnoremap <F5> :e!<CR>
+nnoremap m <C-w>=
 
 " Function Keys
 nnoremap <F2> :NERDTree<CR>
+nnoremap <F5> :e!<CR>
 nnoremap <F6> :TestFile<CR>
 nnoremap <C-F6> :TestSuite<CR>
 
