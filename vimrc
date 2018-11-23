@@ -9,6 +9,13 @@ set hlsearch!
 set list
 set colorcolumn=120
 
+" VARIABLES: NERDTree
+let g:NERDTreeNaturalSort = 1
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeWinSize = 40
+let g:NERDTreeStatusline = '[%{b:NERDTreeRoot.path.str()}]'
+
 " VARIABLES: syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -21,11 +28,12 @@ let g:vimcaps_status_separator = ''
 let g:vimcaps_disable_autocmd = 1
 
 " VARIABLES: airline
-let g:NERDTreeStatusline = 'NERDTree'
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
 let g:airline_left_sep = '║'
 let g:airline_right_sep = '║'
+"let g:airline_left_alt_sep = '║'
+"let g:airline_right_alt_sep = '║'
 let g:airline_symbols = {}
 let g:airline_symbols.paste = 'paste'
 let g:airline_extensions = ['branch', 'fugitiveline', 'hunks', 'keymap', 'quickfix', 'syntastic', 'whitespace']
@@ -45,6 +53,14 @@ endfunction
 function! FileFormat()
   return &ff
 endfunction
+function! LineColumn()
+  return line(".").':'.col(".")
+endfunction
+function! Percent()
+  let byte = line2byte( line(".") ) + col(".") - 1
+  let size = (line2byte( line("$") + 1 ) - 1)
+  return ((byte * 100) / size).'%'
+endfunction
 
 function! AirlineInit()
   call airline#parts#define_function('lockstatus', 'LockStatusLine')
@@ -52,6 +68,8 @@ function! AirlineInit()
   call airline#parts#define_function('hour', 'Hour')
   call airline#parts#define_function('enc', 'Encoding')
   call airline#parts#define_function('ff', 'FileFormat')
+  call airline#parts#define_function('linecol', 'LineColumn')
+  call airline#parts#define_function('perc', 'Percent')
 
   call airline#parts#define_minwidth('hour', 60)
   call airline#parts#define_minwidth('ff', 60)
@@ -61,16 +79,17 @@ function! AirlineInit()
   call airline#parts#define_minwidth('day', 120)
   call airline#parts#define_minwidth('lockstatus', 120)
   call airline#parts#define_minwidth('enc', 120)
+  call airline#parts#define_minwidth('perc', 120)
   call airline#parts#define_minwidth('hunks', 160)
 
   call airline#parts#define_accent('hour', 'bold')
   call airline#parts#define_accent('filetype', 'bold')
 
   let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'lockstatus'])
-  let g:airline_section_b = airline#section#create_left(['day', 'hour'])
+  let g:airline_section_b = airline#section#create_left(['hour'])
   let g:airline_section_x = airline#section#create(['hunks', 'branch', 'tagbar', 'gutentags', 'grepper'])
   let g:airline_section_y = airline#section#create_right(['filetype', 'ff', 'enc'])
-  let g:airline_section_z = airline#section#create_right(['☰ %p%%','%l:%v'])
+  let g:airline_section_z = airline#section#create_right(['☰ ','perc','linecol'])
   AirlineRefresh
 endfunction
 autocmd VimEnter * call AirlineInit()
@@ -110,7 +129,7 @@ inoremap <C-z> <Esc>ui
 inoremap <C-r> <Esc><C-r>i
 inoremap <C-v> <Esc>"0pi
 
-        " Edit Commands
+" Edit Commands
 vnoremap <C-v> "0p
 
 execute pathogen#infect()
