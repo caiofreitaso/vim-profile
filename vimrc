@@ -9,6 +9,16 @@ set hlsearch!
 set list
 set colorcolumn=120
 
+" VARIABLES: indentline
+let g:indentLine_char = '┆'
+let g:indentLine_maxLines = 9000
+
+" VARIABLES: ConqueGdb
+let g:ConqueGdb_EnableMapping = 0
+
+" VARIABLES: surround
+let g:surround_no_mappings = 1
+
 " VARIABLES: NERDTree
 let g:NERDTreeNaturalSort = 1
 let g:NERDTreeShowHidden = 1
@@ -21,6 +31,8 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
 " VARIABLES: vimcaps
 let g:vimcaps_status_style = 'short'
@@ -92,6 +104,11 @@ function! AirlineInit()
   let g:airline_section_z = airline#section#create_right(['☰ ','perc','linecol'])
   AirlineRefresh
 endfunction
+function! IndentInit()
+  IndentLinesReset 2
+endfunction
+
+autocmd VimEnter * call IndentInit()
 autocmd VimEnter * call AirlineInit()
 
 " VIM preferences
@@ -115,9 +132,16 @@ nnoremap m <C-w>=
 nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> :let @/ = ""<CR>
 nnoremap <F5> :e!<CR>
+
 "" Test
 nnoremap <F6> :TestFile<CR>
 nnoremap <C-F6> :TestSuite<CR>
+
+"" ConqueGDB
+nnoremap <F7> :ConqueGdbCommand c<CR>
+" nnoremap <F8> :execute 'ConqueGdbCommand b '.expand('%:t').':'.line(".")<CR>
+nnoremap <F10> :ConqueGdbCommand n<CR>
+nnoremap <F11> :ConqueGdbCommand s<CR>
 
 " Tab Commands
 nnoremap <Tab> gt
@@ -131,5 +155,34 @@ inoremap <C-v> <Esc>"0pi
 
 " Edit Commands
 vnoremap <C-v> "0p
+
+" ConqueGdb Commands
+nnoremap gq :ConqueGdbCommand q<CR>
+nnoremap gr :ConqueGdbCommand r<CR>
+nnoremap gc :ConqueGdbCommand c<CR>
+nnoremap gn :ConqueGdbCommand n<CR>
+nnoremap gs :ConqueGdbCommand s<CR>
+nnoremap gf :ConqueGdbCommand f<CR>
+nnoremap <expr> gbd ':ConqueGdbCommand d '
+nnoremap gbb :execute 'ConqueGdbCommand b '.expand('%:t').':'.line(".")<CR>
+nnoremap gbt :ConqueGdbCommand bt<CR>
+nnoremap gd :ConqueGdbCommand disp<CR>
+nnoremap gdd :execute 'ConqueGdbCommand disp '.expand("<cword>")<CR>
+
+" surround Commands
+nnoremap ds <Plug>Dsurround
+nnoremap dS <Plug>Dsurround
+nnoremap cs <Plug>Csurround
+nnoremap cS <Plug>Csurround
+nnoremap ys <Plug>Ysurround
+nnoremap yS <Plug>Ysurround
+nnoremap yss <Plug>Yssurround
+nnoremap ySs <Plug>Yssurround
+nnoremap ysS <Plug>Yssurround
+nnoremap ySS <Plug>Yssurround
+vnoremap ys <Plug>VSurround
+vnoremap yS <Plug>VSurround
+inoremap <C-g>s <Plug>Isurround
+inoremap <C-g>S <Plug>Isurround
 
 execute pathogen#infect()
