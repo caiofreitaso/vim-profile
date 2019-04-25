@@ -8,8 +8,13 @@ set hid
 set hlsearch!
 set list
 set colorcolumn=120
+set splitbelow
+set previewheight=5
 
 set gfn=Fixed\ 9
+
+" VARIABLES: SuperTab
+let g:SuperTabClosePreviewOnPopupClose = 1
 
 " VARIABLES: indentline
 let g:indentLine_char = '┆'
@@ -32,9 +37,13 @@ let g:NERDTreeStatusline = '[%{b:NERDTreeRoot.path.str()}]'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_error_symbol = "━→"
+let g:syntastic_warning_symbol = "┉⇢"
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+let g:syntastic_cs_checkers = ['code_checker']
 
 " VARIABLES: OmniSharp
 let g:OmniSharp_highlight_types = 1
@@ -195,11 +204,16 @@ inoremap <C-g>S <Plug>Isurround
 " OmniSharp Commands
 augroup omnisharp_commands
   autocmd!
+
+  autocmd BufEnter,TextChanged,InsertLeave *.cs call OmniSharp#HighlightBuffer()
   autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+  autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
   autocmd FileType cs nnoremap <buffer> od :OmniSharpGotoDefinition<CR>
   autocmd FileType cs nnoremap <buffer> ofi :OmniSharpFindImplementations<CR>
   autocmd FileType cs nnoremap <buffer> ofs :OmniSharpFindSymbol<CR>
   autocmd FileType cs nnoremap <buffer> ofu :OmniSharpFindUsages<CR>
+  autocmd FileType cs nnoremap <buffer> oa :OmniSharpGetCodeActions<CR>
   autocmd FileType cs nnoremap <buffer> ox :OmniSharpFixUsings<CR>
   autocmd FileType cs nnoremap <buffer> ot :OmniSharpTypeLookup<CR>
   autocmd FileType cs nnoremap <buffer> odc :OmniSharpDocumentation<CR>
