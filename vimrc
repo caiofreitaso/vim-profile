@@ -9,6 +9,8 @@ set hlsearch!
 set list
 set colorcolumn=120
 
+set gfn=Fixed\ 9
+
 " VARIABLES: indentline
 let g:indentLine_char = '┆'
 let g:indentLine_maxLines = 9000
@@ -33,6 +35,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
+
+" VARIABLES: OmniSharp
+let g:OmniSharp_highlight_types = 1
+let g:omnicomplete_fetch_full_documentation = 1
+let g:OmniSharp_timeout = 5
 
 " VARIABLES: vimcaps
 let g:vimcaps_status_style = 'short'
@@ -98,7 +105,7 @@ function! AirlineInit()
   call airline#parts#define_accent('filetype', 'bold')
 
   let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'lockstatus'])
-  let g:airline_section_b = airline#section#create_left(['hour'])
+  let g:airline_section_b = airline#section#create_left(['day', 'hour'])
   let g:airline_section_x = airline#section#create(['hunks', 'branch', 'tagbar', 'gutentags', 'grepper'])
   let g:airline_section_y = airline#section#create_right(['filetype', 'ff', 'enc'])
   let g:airline_section_z = airline#section#create_right(['☰ ','perc','linecol'])
@@ -184,5 +191,20 @@ vnoremap ys <Plug>VSurround
 vnoremap yS <Plug>VSurround
 inoremap <C-g>s <Plug>Isurround
 inoremap <C-g>S <Plug>Isurround
+
+" OmniSharp Commands
+augroup omnisharp_commands
+  autocmd!
+  autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+  autocmd FileType cs nnoremap <buffer> od :OmniSharpGotoDefinition<CR>
+  autocmd FileType cs nnoremap <buffer> ofi :OmniSharpFindImplementations<CR>
+  autocmd FileType cs nnoremap <buffer> ofs :OmniSharpFindSymbol<CR>
+  autocmd FileType cs nnoremap <buffer> ofu :OmniSharpFindUsages<CR>
+  autocmd FileType cs nnoremap <buffer> ox :OmniSharpFixUsings<CR>
+  autocmd FileType cs nnoremap <buffer> ot :OmniSharpTypeLookup<CR>
+  autocmd FileType cs nnoremap <buffer> odc :OmniSharpDocumentation<CR>
+  autocmd FileType cs nnoremap <buffer> oh :OmniSharpSignatureHelp<CR>
+  autocmd FileType cs nnoremap <buffer> <C-r><C-r> :OmniSharpRename<CR>
+augroup END
 
 execute pathogen#infect()

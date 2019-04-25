@@ -40,3 +40,9 @@
 [submodule "bundle/vim-airline-themes"]
 	path = bundle/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes
+[submodule "bundle/omnisharp-vim"]
+	path = bundle/omnisharp-vim
+	url = git://github.com/OmniSharp/omnisharp-vim.git
+[submodule "bundle/ultisnips"]
+	path = bundle/ultisnips
+	url = git://github.com/SirVer/ultisnips
