@@ -1,6 +1,7 @@
 #!/bin/bash
 
-git submodules --init --recursive
+git submodule init
+git submodule update
 
 cd bundle/vimcaps/autoload
 make
