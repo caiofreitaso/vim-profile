@@ -219,6 +219,8 @@ augroup omnisharp_commands
   autocmd FileType cs nnoremap <buffer> odc :OmniSharpDocumentation<CR>
   autocmd FileType cs nnoremap <buffer> oh :OmniSharpSignatureHelp<CR>
   autocmd FileType cs nnoremap <buffer> <C-r><C-r> :OmniSharpRename<CR>
+  autocmd FileType cs nnoremap <buffer> otd :OmniSharpDebugTest<CR>
+  autocmd FileType cs nnoremap <buffer> otr :OmniSharpRunTest<CR>
 augroup END
 
 execute pathogen#infect()
