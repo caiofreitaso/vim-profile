@@ -49,6 +49,7 @@ let g:syntastic_cs_checkers = ['code_checker']
 let g:OmniSharp_highlight_types = 1
 let g:omnicomplete_fetch_full_documentation = 1
 let g:OmniSharp_timeout = 5
+let g:OmniSharp_server_use_net6 = 1
 
 " VARIABLES: vimcaps
 let g:vimcaps_status_style = 'short'
@@ -66,9 +67,9 @@ let g:airline_symbols = {}
 let g:airline_symbols.paste = 'paste'
 let g:airline_extensions = ['branch', 'fugitiveline', 'hunks', 'keymap', 'quickfix', 'syntastic', 'whitespace']
 
-function! LockStatusLine()
-  return vimcaps#statusline(7)
-endfunction
+" function! LockStatusLine()
+"   return vimcaps#statusline(7)
+" endfunction
 function! DayMonth()
   return strftime("%d/%b")
 endfunction
@@ -91,7 +92,7 @@ function! Percent()
 endfunction
 
 function! AirlineInit()
-  call airline#parts#define_function('lockstatus', 'LockStatusLine')
+  " call airline#parts#define_function('lockstatus', 'LockStatusLine')
   call airline#parts#define_function('day', 'DayMonth')
   call airline#parts#define_function('hour', 'Hour')
   call airline#parts#define_function('enc', 'Encoding')
@@ -113,7 +114,7 @@ function! AirlineInit()
   call airline#parts#define_accent('hour', 'bold')
   call airline#parts#define_accent('filetype', 'bold')
 
-  let g:airline_section_a = airline#section#create_left(['mode', 'paste', 'lockstatus'])
+  let g:airline_section_a = airline#section#create_left(['mode', 'paste'])
   let g:airline_section_b = airline#section#create_left(['day', 'hour'])
   let g:airline_section_x = airline#section#create(['hunks', 'branch', 'tagbar', 'gutentags', 'grepper'])
   let g:airline_section_y = airline#section#create_right(['filetype', 'ff', 'enc'])
