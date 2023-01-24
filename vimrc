@@ -207,7 +207,7 @@ augroup omnisharp_commands
   autocmd!
 
   autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
-  autocmd CursorHold *.cs call OmniSharp#actions#documentation#TypeLookup()
+"  autocmd CursorHold *.cs call OmniSharp#actions#documentation#TypeLookup()
 
   autocmd FileType cs nnoremap <buffer> od :OmniSharpGotoDefinition<CR>
   autocmd FileType cs nnoremap <buffer> ofi :OmniSharpFindImplementations<CR>

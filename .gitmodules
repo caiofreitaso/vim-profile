@@ -46,3 +46,7 @@
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = https://github.com/SirVer/ultisnips
+[submodule "bundle/vimspector"]
+	path = bundle/vimspector
+	url = https://github.com/puremourning/vimspector.git
+	branch = 8aae75daed0dc007e2b220457c2635dce1efaaba
