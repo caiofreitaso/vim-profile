@@ -48,7 +48,7 @@ let g:syntastic_cs_checkers = ['code_checker']
 " VARIABLES: OmniSharp
 let g:OmniSharp_highlight_types = 1
 let g:omnicomplete_fetch_full_documentation = 1
-let g:OmniSharp_timeout = 5
+let g:OmniSharp_timeout = 10
 let g:OmniSharp_server_use_net6 = 1
 
 " VARIABLES: vimcaps
@@ -206,9 +206,8 @@ inoremap <C-g>S <Plug>Isurround
 augroup omnisharp_commands
   autocmd!
 
-  autocmd BufEnter,TextChanged,InsertLeave *.cs call OmniSharp#HighlightBuffer()
   autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
-  autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+  autocmd CursorHold *.cs call OmniSharp#actions#documentation#TypeLookup()
 
   autocmd FileType cs nnoremap <buffer> od :OmniSharpGotoDefinition<CR>
   autocmd FileType cs nnoremap <buffer> ofi :OmniSharpFindImplementations<CR>
